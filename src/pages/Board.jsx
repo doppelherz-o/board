@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 
 export default function Board() {
   const [selected, setSelected] = useState(null);
+  const svgRef = useRef(null);
 
   const [shapes, setShapes] = useState([
     { id: 1, type: "rect", x: 100, y: 100, width: 200, height: 100 },
@@ -10,7 +11,11 @@ export default function Board() {
   ]);
 
   return (
-    <svg viewBox="0 0 1600 900">
+    <svg
+      viewBox="0 0 1600 900"
+      style={{ width: "100%", border: "5px solid black" }}
+      ref={svgRef}
+    >
       {shapes.map((s) => {
         if (s.type === "rect") {
           return (
@@ -22,6 +27,7 @@ export default function Board() {
               height={s.height}
               onClick={() => setSelected(s.id)}
               stroke={selected === s.id ? "orange" : "black"}
+              strokeWidth={selected === s.id ? "3px" : null}
             ></rect>
           );
         } else if (s.type === "circle") {
@@ -31,6 +37,7 @@ export default function Board() {
               cx={s.x}
               onClick={() => setSelected(s.id)}
               stroke={selected === s.id ? "orange" : "black"}
+              strokeWidth={selected === s.id ? "3px" : null}
               cy={s.y}
               r={s.radius}
             ></circle>
@@ -45,6 +52,7 @@ export default function Board() {
               y2={s.y2}
               onClick={() => setSelected(s.id)}
               stroke={selected === s.id ? "orange" : "black"}
+              strokeWidth={selected === s.id ? "3px" : null}
             ></line>
           );
         } else {
